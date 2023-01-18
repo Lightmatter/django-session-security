@@ -69,7 +69,7 @@ class SessionSecurityMiddleware(MiddlewareMixin):
             set_last_activity(request.session, now)
             return
         
-        if request.path == reverse('session_security_ping' and
+        if (request.path == reverse('session_security_ping') and
                 'idleFor' in request.GET):
             self.update_last_activity(request, now)
 
