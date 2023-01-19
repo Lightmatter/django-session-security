@@ -22,8 +22,8 @@ class PingView(generic.View):
     def get(self, request, *args, **kwargs):
         if '_session_security' not in request.session:
             # It probably has expired already
-            return render(request, "ping.jinja", context={"inactive_for": "logout"})
+            return render(request, "session_security/ping.html", context={"inactive_for": "logout"})
 
         last_activity = get_last_activity(request.session)
         inactive_for = (datetime.now() - last_activity).seconds
-        return render(request, "session_security/ping.jinja", context={"inactive_for": inactive_for})
+        return render(request, "session_security/ping.html", context={"inactive_for": inactive_for})
