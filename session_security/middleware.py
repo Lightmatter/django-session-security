@@ -71,7 +71,6 @@ class SessionSecurityMiddleware(MiddlewareMixin):
 
         delta = now - get_last_activity(request.session)
         expire_seconds = self.get_expire_seconds(request)
-
         if delta >= timedelta(seconds=expire_seconds):
             logout(request)
         elif (request.path == reverse('session_security_ping') and
