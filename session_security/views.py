@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 from django.contrib import auth
 from django.views import generic
 from django import http
-from django.shortcuts import render
 
 from .utils import get_last_activity
 
@@ -22,8 +21,10 @@ class PingView(generic.View):
     def get(self, request, *args, **kwargs):
         if '_session_security' not in request.session:
             # It probably has expired already
-            return render(request, "session_security/ping.html", context={"inactive_for": "logout"})
+            return http.HttpResponse('"logout"',
+                                     content_type='application/json')
 
         last_activity = get_last_activity(request.session)
         inactive_for = (datetime.now() - last_activity).seconds
-        return render(request, "session_security/ping.html", context={"inactive_for": inactive_for})
+        return http.HttpResponse(inactive_for,
+                                 content_type='application/json')
