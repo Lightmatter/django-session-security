@@ -12,6 +12,7 @@ Make sure that it is placed **after** authentication middlewares.
 from datetime import datetime, timedelta
 
 import django
+from django.contrib import messages
 from django.contrib.auth import logout
 try: # Django 2.0
     from django.urls import reverse, resolve, Resolver404
@@ -73,6 +74,7 @@ class SessionSecurityMiddleware(MiddlewareMixin):
         expire_seconds = self.get_expire_seconds(request)
         if delta >= timedelta(seconds=expire_seconds):
             logout(request)
+            messages.warning(request, 'You have been logged out due to inactivity. Please log in again.')
         elif (request.path == reverse('session_security_ping') and
                 'idleFor' in request.GET):
             self.update_last_activity(request, now)
