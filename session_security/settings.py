@@ -40,6 +40,14 @@ PASSIVE_URLS = getattr(settings, 'SESSION_SECURITY_PASSIVE_URLS', [])
 
 PASSIVE_URL_NAMES = getattr(settings, 'SESSION_SECURITY_PASSIVE_URL_NAMES', [])
 
+INSTALLED_APPS = [
+    "django.contrib.messages"
+]
+
+MIDDLEWARE = ["django.contrib.sessions.middleware.SessionMiddleware", "django.contrib.messages.middleware.MessageMiddleware"]
+
+TEMPLATES = getattr(settings, "TEMPLATES")
+
 expire_at_browser_close = getattr(
     settings,
     'SESSION_EXPIRE_AT_BROWSER_CLOSE',
